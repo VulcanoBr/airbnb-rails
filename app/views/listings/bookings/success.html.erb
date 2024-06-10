@@ -1,0 +1,7 @@
+<div class="max-w-2xl w-full mx-auto shadow-lg flex flex-col items-center p-2">
+  <h1 class="text-4xl"> Your booking has been confirmed </h1>
+  <br/>
+  <%= image_tag @listing.images.first, class: "h-[400px]" %>
+  <br/>
+  <p> Check in on <%= @booking.checkin_date.strftime("%m/%d/%Y") %>
+</div>

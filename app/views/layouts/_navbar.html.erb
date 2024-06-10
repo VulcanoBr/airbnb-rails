@@ -1,0 +1,40 @@
+<div class="w-full h-16 flex items-center border-b border-gray-100 fixed top-0 bg-white z-50">
+  <div class="container px-5 w-full mx-auto flex justify-between items-center">
+    <%= link_to "/", class: "text-red-600 font-bold text-xl flex gap-2" do %>
+      <%= image_tag "logo-nav.png", class: "w-8 object-cover" %>
+      <span class="mt-auto"> Airbnb </span>
+    <% end %>
+    <div class="flex items-center gap-4">
+      <% if !current_user %>
+        <%= link_to "Sign in", new_user_session_path, class: "rounded-lg border-2 border-gray-100 font-semibold p-2" %>
+        <%= link_to "Create account", new_user_registration_path, 
+            class: "rounded-lg border-2 border-indigo-500 font-semibold p-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-pink-100" %>
+      <% else %>
+        <% if current_user.stripe_status == "complete" %>
+          <%= link_to "New listing", new_listing_path, class: "rounded-full border-2 border-indigo-500 font-semibold p-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-pink-100" %>          
+        <% end %>
+
+        <div class="relative" data-controller="dropdown" data-action="click@window->dropdown#closeUnlessDropdown">
+          <a href="#" class="border-2 border-gray-100 rounded-full h-12 w-12 flex items-center justify-center overflow-hidden" 
+              data-action="click->dropdown#toggle">
+            <% if current_user.profile_picture.attached? %>
+              <%= image_tag current_user.profile_picture, class: "w-full h-full object-cover" %>
+            <% else %>
+              <i class="fa-solid fa-user"></i>
+            <% end %>
+          </a>
+
+          <div class="absolute top-12 -left-24 w-40 h-64 bg-white border-2 border-gray-200 rounded-lg hidden transition-all duration-250" 
+              data-dropdown-target="menu"> 
+            <div class="flex flex-col items-center">
+              <%= link_to "Settings", settings_path, class: "p-2 w-full hover:bg-gray-300" %>
+              <%= link_to "Your Bookings", bookings_path, class: "p-2 w-full hover:bg-gray-300" if current_user.bookings.any?  %>
+              <%= link_to "Become an owner", owner_signup_path, class: "p-2 w-full hover:bg-gray-300" if current_user.stripe_status == "pending" %> 
+              <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "p-2 w-full hover:bg-gray-300" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

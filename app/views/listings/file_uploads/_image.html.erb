@@ -1,0 +1,8 @@
+<div class="relative" data-controller="utils">
+  <%= image_tag image, class: "w-20 h-20 object-cover" %>
+  <%= hidden_field_tag "listing[images][]", image.signed_id %>
+  <%= link_to "#", class: "absolute -top-1 -right-1 bg-gray-100 px-1.5 rounded-full", 
+      data: { action: "utils#remove" } do %>
+    <i class="fa-solid fa-x text-red-500 text-sm"></i>
+  <% end %>
+</div>

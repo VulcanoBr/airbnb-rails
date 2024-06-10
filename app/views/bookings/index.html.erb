@@ -1,0 +1,42 @@
+<div class="flex flex-col w-full">
+  <% if current_user.bookings.complete.any? %>
+    <h1 class="text-4xl text-center"> Your Upcoming bookings </h1>
+
+    <div class="max-w-5xl w-full mx-auto grid grid-cols-3 gap-8">
+      <% current_user.bookings.complete.each do |booking| %>
+        <%= link_to booking.listing do %>
+          <div class="rounded-lg h-64 flex flex-col gap-1 shadow-lg overflow-hidden">
+            <%= image_tag booking.listing.images.first, class: "h-40 w-full object-cover" if booking.listing.images.any? %>
+            <div class="px-2 flex flex-col">
+              <span> <%= booking.listing.title %> </span>
+              <span> Check In On <%= booking.checkin_date.strftime("%m/%d/%Y") %> </span>
+              <span> Check Out On <%= booking.checkout_date.strftime("%m/%d/%Y") %> </span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+    
+  <% if current_user.bookings.pending.any? %>
+    <h1 class="text-4xl text-center"> Your Pending bookings </h1>
+
+    <div class="max-w-5xl w-full mx-auto grid grid-cols-3 gap-8">
+      <% current_user.bookings.pending.each do |booking| %>
+        <%= link_to payment_listing_booking_path(booking.listing, booking) do %>
+          <div class="rounded-lg h-64 flex flex-col gap-1 shadow-lg overflow-hidden hover:brightness-75">
+            <%= image_tag booking.listing.images.first, class: "h-40 w-full object-cover" if booking.listing.images.any? %>
+            <div class="px-2 flex flex-col">
+              <span> <%= booking.listing.title %> </span>
+              <span class="text-lg text-pink-600"> Pay now to confirm your booking </span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if current_user.bookings.count.zero? %>
+    <h1 class="text-4xl text-center"> This is where your bookings will show up </h1>
+  <% end %>
+</div>

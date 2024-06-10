@@ -1,0 +1,77 @@
+<%= form_with(model: listing, class: "contents") do |form| %>
+  <% if listing.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+      <ul>
+        <% listing.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :address %>
+    <%= form.text_field :address, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.rich_text_area :description, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5" data-controller="image-upload" data-image-upload-url-value="<%= listings_file_uploads_path %>">
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true, 
+        class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full",
+        direct_upload: true, data: { image_upload_target: "input", action: "image-upload#fileAdded" } %>
+    <br/>
+    <div data-image-upload-target="preview" class="flex flex-wrap gap-8" id="image-previews">
+      <% listing.images.each do |image| %>
+        <%= render "listings/file_uploads/image", image: image.blob %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8 my-5">
+    <div class="">
+      <%= form.label :bedrooms %>
+      <%= form.number_field :bedrooms, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0 %>
+    </div>
+
+    <div class="">
+      <%= form.label :bathrooms %>
+      <%= form.number_field :bathrooms, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0 %>
+    </div>
+
+    <div class="">
+      <%= form.label :people_limit %>
+      <%= form.number_field :people_limit, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0 %>
+    </div>
+
+    <div class="">
+      <%= form.label :day_price, "Price/day" %>
+      <%= form.number_field :day_price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0, placeholder: "$109" %>
+    </div>
+
+    <div class="">
+      <%= form.label :weekly_price, "Price/wk" %>
+      <%= form.number_field :weekly_price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0, placeholder: "$1000" %>
+    </div>
+
+    <div class="">
+      <%= form.label :monthly_price, "Price/month" %>
+      <%= form.number_field :monthly_price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", min: 0, placeholder: "$3000" %>
+    </div>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

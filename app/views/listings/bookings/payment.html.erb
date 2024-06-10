@@ -1,0 +1,14 @@
+<div class="w-full flex flex-col md:flex-row">
+  <div class="w-full md:w-1/2">
+    <%= link_to "Back to listing", @listing, class: "bg-gray-100 rounded-lg border-2 border-gray-900 mr-auto p-2" %>
+    <h1 class="text-4xl mt-8"> You're so close to staying at <%= @listing.title %> </h1>
+    <br/>
+    <%= image_tag @listing.images.first, class: "h-[500px] hidden md:flex" %>
+  </div>
+  <div class="w-full md:w-1/2 md:pt-16">
+    <div class="max-w-2xl rounded-lg shadow-lg mx-auto p-4" data-controller="stripe-payment" 
+        data-stripe-payment-url-value="<%= stripe_session_listing_booking_path(@listing, @booking) %>">
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="absolute top-16 z-0 w-full flex justify-center">
+  <div class="max-w-5xl w-full flex justify-end">
+    <% if flash[:notice].present? %>
+      <p class="notice rounded-lg p-2 text-green-500 bg-white shadow-lg border"><%= notice %></p>
+    <% end %>
+    <% if flash[:alert].present? %>
+      <p class="alert rounded-lg p-2 text-red-500 bg-white shadow-lg border">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <%= alert %>
+      </p>
+    <% end %>
+  </div>
+</div>

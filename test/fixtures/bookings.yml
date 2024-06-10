@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  listing: one
+  user: one
+  checkin_date: 2024-06-02 15:39:55
+  checkout_date: 2024-06-02 15:39:55
+
+two:
+  listing: two
+  user: two
+  checkin_date: 2024-06-02 15:39:55
+  checkout_date: 2024-06-02 15:39:55

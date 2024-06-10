@@ -1,0 +1,62 @@
+<div class="flex flex-col max-w-3xl w-full mx-auto">
+  <div class="flex justify-between items-center">
+    <%= link_to "Back to All Listings", listings_path, class: "bg-gray-100 rounded-lg border-2 border-gray-900 mr-auto p-2" %>
+    <%= link_to "Edit listing", edit_listing_path(@listing) if current_user == @listing.user %>
+  </div>
+  <br/>
+  <% if @listing.images.any? %>
+    <div class="flex  flex-col md:flex-row gap-8 rounded-lg overflow-hidden relative">
+      <%= image_tag @listing.images.first, class: "md:w-80 h-80 object-cover" %>
+      <div class="grid grid-cols-4 md:grid-cols-2 md:gap-8 flex-wrap">
+        <% @listing.images[1..4].each do |image| %>
+          <%= image_tag image, class: "h-20 w-20 md:w-full md:h-36 object-cover" %>
+        <% end %>
+      </div>
+      <%= link_to "Show all photos", photos_listing_path(@listing), class: "absolute bottom-4 right-4 bg-white rounded-lg p-2" %>
+    </div>
+  <% end %>
+  <br/>
+  <h1 class="text-2xl font-semibold"> <%= @listing.title %> </h1>
+  <%= @listing.description %>
+  
+  <% if @listing.day_price %>
+    <% if current_user&.upcoming_bookings(@listing)&.any? %>
+      <div class="flex flex-col justify-center items-center text-lg">
+        <span class=""> You have an upcoming reservation </span>
+        <span class="mx-1 bg-gradient-to-r from-red-500 to-pink-600 text-red-50 p-2 rounded-full text-sm"> Check In On </span> 
+        <span class=""> 
+          <%= current_user.upcoming_bookings(@listing).first.checkin_date.strftime("%m/%d/%Y") %>
+        </span>
+      </div>
+    <% else %>
+      <%= link_to new_listing_booking_path(@listing), class: "mt-4 mx-auto" do %>
+        <div class="text-lg group flex items-center">
+          <div class="border-b border-transparent group-hover:border-pink-600"> 
+            Starting at
+            <span class="bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent mx-1"> <%= number_to_currency @listing.day_price %> </span> 
+            per night
+          </div>
+          <%= content_tag :span, "Book Now", class: "bg-gradient-to-b from-purple-600 to-pink-300 text-green-100 rounded-full p-2 mx-1 text-sm 
+            group-hover:to-red-500 group-hover:from-pink-600 group-hover:animate-pulse" %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <div class="grid grid-cols-3 gap-8 mt-4">
+    <div class="shadow-lg h-40 flex flex-col items-center justify-center rounded-lg"> 
+      <i class="fa-solid fa-bed fa-2x"></i>
+      <span class="text-3xl font-semibold"> <%= @listing.bedrooms %> </span>
+    </div>
+    <div class="shadow-lg h-40 flex flex-col items-center justify-center rounded-lg"> 
+      <i class="fa-solid fa-toilet fa-2x"></i>
+      <span class="text-3xl font-semibold"> <%= @listing.bathrooms %> </span>
+    </div>
+    <div class="shadow-lg h-40 flex flex-col items-center justify-center rounded-lg"> 
+      <i class="fa-solid fa-person fa-2x"></i>
+      <span class="text-3xl font-semibold"> <%= @listing.people_limit %> </span>
+    </div>
+  </div>
+
+  
+</div>
