@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_08_205135) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[8.0].define(version: 2024_06_08_205135) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -53,8 +50,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_08_205135) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.bigint "listing_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "listing_id", null: false
+    t.integer "user_id", null: false
     t.datetime "checkin_date"
     t.datetime "checkout_date"
     t.datetime "created_at", null: false
@@ -84,7 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_08_205135) do
     t.integer "bedrooms"
     t.integer "bathrooms"
     t.integer "people_limit"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.decimal "day_price"
     t.decimal "weekly_price"
     t.decimal "monthly_price"
